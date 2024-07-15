@@ -1,5 +1,7 @@
+const submissionRoutes = require('./submissions/submissionRoutes')
+
 async function v1Plugin(fastify,options){
-  fastify.register(require('./test/testRoutes'),{prefix:'/test'})
+  fastify.register(submissionRoutes,{prefix:'/submissions'})
 }
 
 module.exports = v1Plugin

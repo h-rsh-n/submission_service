@@ -1,14 +1,18 @@
-const PORT  = 3000;
+const app = require('./app');
+const { dbConnection } = require('./config/dbConfig');
+const { PORT } = require('./config/serverConfig')
 
 const fastify = require('fastify')({
   logger:true
 })
 
-fastify.register(require('./app'))
+fastify.register(app);
 
-fastify.listen({port:PORT},(err)=>{
+fastify.listen({port:PORT},async(err)=>{
   if(err){
     fastify.log.error(err);
+    process.exit(1);
   }
-  console.log(`server started at port ${PORT}`);
+  await dbConnection();
+  console.log(`Server started on port ${PORT}`);
 })
